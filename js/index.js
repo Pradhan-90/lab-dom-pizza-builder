@@ -89,11 +89,40 @@ function renderGlutenFreeCrust() {
 
 function renderButtons() {
   // Iteration 3: add/remove the class "active" of each `<button class="btn">`
+  const buttons = document.querySelectorAll(".btn");
+
+  buttons.forEach((button) => {
+    const ingredient = button.dataset.ingredient;
+    if (state[ingredient]) {
+      button.classList.add("active");
+    } else {
+      button.classList.remove("active");
+    }
+  });
 }
+  
 
 function renderPrice() {
   // Iteration 4: change the HTML of `<aside class="panel price">`
+  const priceListEle = document.querySelector('.price ul');
+  priceListEle.innerHTML = '';
+
+  const totalPriceEle = document.querySelector('.price strong');
+  let totalPrice = basePrice;
+  
+  for(let oneIngredient in ingredients) {
+    if(state[oneIngredient]) {
+      let newLi = document.createElement('li')
+      newLi.innerHTML = `$${ingredients[oneIngredient].price} ${ingredients[oneIngredient].name}`
+      priceListEle.appendChild(newLi);
+      totalPrice += ingredients[oneIngredient].price;
+    }
+
+    totalPriceEle.innerHTML = `$${totalPrice}`;
+  }
 }
+
+
 
 
 // Iteration 1: Example of a click event listener on `<button class="btn btn-pepperoni">`
